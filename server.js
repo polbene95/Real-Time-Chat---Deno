@@ -1,9 +1,22 @@
 import { listenAndServe } from 'https://deno.land/std/http/server.ts';
+import * as flags from 'https://deno.land/std/flags/mod.ts';
 import { acceptWebSocket, acceptable } from 'https://deno.land/std/ws/mod.ts';
 
 import chat from './chat.js';
 
-listenAndServe({port: 3000}, async (request)=>{
+const { args, exit } = Deno;
+const DEFAULT_PORT = 3000;
+const argPort = flags.parse(args).port;
+const port = argPort ? Number(argPort) : DEFAULT_PORT;
+
+if (isNaN(port)) {
+    console.log('port is not a number');
+    
+    exit(1)
+} 
+
+
+listenAndServe({port}, async (request)=>{
     if (acceptable(request))
         acceptWebSocket({
             conn: request.conn,
