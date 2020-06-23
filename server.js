@@ -15,7 +15,6 @@ if (isNaN(port)) {
     exit(1)
 } 
 
-
 listenAndServe({port}, async (request)=>{
     if (acceptable(request))
         acceptWebSocket({
