@@ -1,6 +1,7 @@
 import { listenAndServe } from 'https://deno.land/std/http/server.ts';
 import * as flags from 'https://deno.land/std/flags/mod.ts';
 import { acceptWebSocket, acceptable } from 'https://deno.land/std/ws/mod.ts';
+import { Application } from "https://deno.land/x/oak/mod.ts";
 
 import chat from './chat.js';
 
@@ -14,6 +15,19 @@ if (isNaN(port)) {
     
     exit(1)
 } 
+
+
+
+const app = new Application();
+
+
+app.use(async (context) => {
+    await send(context, context.request.url.pathname, {
+      root: `${Deno.cwd()}/public`,
+      index: "chat.html",
+    });
+});
+
 
 listenAndServe({port}, async (request)=>{
     if (acceptable(request))
