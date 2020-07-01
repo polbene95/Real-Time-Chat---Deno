@@ -41,6 +41,9 @@ async function fileExist(path) {
 }
 
 function modifyUrl(url) {
+    if (url === '/') {
+        url = '/index.html';
+    }
     const position = url.indexOf('?');
     if (position > -1) {
         url = url.substring(0,position)
