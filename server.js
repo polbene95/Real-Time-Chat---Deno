@@ -42,7 +42,7 @@ async function fileExist(path) {
 
 function modifyUrl(url) {
     if (url === '/') {
-        url = '/index.html';
+        url = '/chat.html';
     }
     const position = url.indexOf('?');
     if (position > -1) {
